@@ -2,7 +2,16 @@ import {withSentryConfig} from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ['3000-firebase-nodebase-1760493652353.cluster-fbfjltn375c6wqxlhoehbz44sk.cloudworkstations.dev']
+  allowedDevOrigins: ['3000-firebase-nodebase-1760493652353.cluster-fbfjltn375c6wqxlhoehbz44sk.cloudworkstations.dev'],
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/workflows',
+        permanent: false,
+      }
+    ]
+  },
 };
 
 export default withSentryConfig(nextConfig, {
