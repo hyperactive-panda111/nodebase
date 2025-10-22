@@ -1,0 +1,17 @@
+## Features
+
+*   **Framework:** [Next.js](https://nextjs.org/) (App Router)
+*   **ORM:** [Prisma](https://www.prisma.io/)
+*   **API:** [tRPC](https://trpc.io/)
+*   **Authentication:** NextAuth.js
+*   **Background Jobs:** [Inngest](https://www.inngest.com/)
+*   **Error Tracking:** [Sentry](https://sentry.io/)
+*   **UI:** [Shadcn UI](https://ui.shadcn.com/)
+
+## Architecture
+
+The project is structured as a monorepo, with the main application code located in the `nodebase` directory.
+
+*   **tRPC:** The API is built using tRPC, which provides end-to-end typesafe APIs. The main tRPC router is defined in `nodebase/src/trpc/routers/_app.ts`, and the individual routers are located in the `features` directory.
+*   **Serverless Functions:** The `nodebase/src/inngest` directory contains the Inngest functions, which are used for running background jobs.
+*   **Prisma:** The database schema is defined in `nodebase/prisma/schema.prisma`.
