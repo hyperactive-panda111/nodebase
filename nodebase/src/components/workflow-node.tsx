@@ -29,7 +29,7 @@ export function WorkflowNode({
                     <Button size={'sm'} variant={'ghost'} onClick={onSettings}>
                         <SettingsIcon className="size-4"/>
                     </Button>
-                    <Button size={'sm'} variant={'ghost'} onClick={onSettings}>
+                    <Button size={'sm'} variant={'ghost'} onClick={onDelete}>
                         <TrashIcon className="size-4"/>
                     </Button>
                 </NodeToolbar>
