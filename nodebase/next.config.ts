@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: [
     '3000-firebase-nodebase-1760493652353.cluster-fbfjltn375c6wqxlhoehbz44sk.cloudworkstations.dev',
     '8288-firebase-nodebase-1760493652353.cluster-fbfjltn375c6wqxlhoehbz44sk.cloudworkstations.dev',
+    'https://unrevoked-stoloniferous-rickey.ngrok-free.dev'
   ],
   async redirects() {
     return [

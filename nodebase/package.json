@@ -7,9 +7,10 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "biome check",
+    "ngrok:dev": "ngrok http --url=unrevoked-stoloniferous-rickey.ngrok-free.dev 3000",
     "format": "biome format --write",
     "inngest:dev": "inngest-cli dev",
-    "dev:all": "mprocs"
+    "dev:all": "dotenv -- mprocs"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^2.0.31",
@@ -93,6 +94,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/toposort": "^2.0.7",
+    "dotenv-cli": "^11.0.0",
     "inngest-cli": "^1.12.1",
     "mprocs": "^0.7.3",
     "prisma": "^6.17.1",
