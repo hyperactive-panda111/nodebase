@@ -13,7 +13,10 @@ export const auth = betterAuth({
         enabled: true,
         autoSignIn: true,
     },
-    trustedOrigins: ['https://3000-firebase-nodebase-1760493652353.cluster-fbfjltn375c6wqxlhoehbz44sk.cloudworkstations.dev'],
+    trustedOrigins: [
+        'https://3000-firebase-nodebase-1760493652353.cluster-fbfjltn375c6wqxlhoehbz44sk.cloudworkstations.dev',
+        'https://unrevoked-stoloniferous-rickey.ngrok-free.dev'
+    ],
     plugins: [
         polar({
             client: polarClient,
