@@ -17,7 +17,7 @@ export const stripeTriggerExecutor: NodeExecutor<StripeTriggerData> = async ({
         })
     )
 
-    const result = await step.run('google-form-trigger', async () => context);
+    const result = await step.run('stripe-trigger', async () => context);
 
     await publish(
         stripeTriggerChannel().status({
