@@ -36,7 +36,7 @@ export const useRemoveWorkflow = () => {
         onSuccess: (data) => {
             toast.success(`Workflow "${data.name}" removed`);
             queryClient.invalidateQueries(trpc.workflows.getMany.queryOptions({}));
-            queryClient.invalidateQueries(trpc.workflows.getOne.queryOptions({id: data.id}));
+            queryClient.invalidateQueries(trpc.workflows.getOne.queryFilter({id: data.id}));
         },
         onError: (error) => {
             toast.error(`Failed to remove workflow: ${error.message}`);
