@@ -23,6 +23,7 @@ type anthropicData = {
 export const anthropicExecutor: NodeExecutor<anthropicData> = async ({
     data,
     nodeId,
+    userId,
     context,
     step,
     publish,
@@ -43,7 +44,7 @@ export const anthropicExecutor: NodeExecutor<anthropicData> = async ({
             }),
         );
 
-        throw new NonRetriableError('Gemini node: Variable name is missing');
+        throw new NonRetriableError('Anthropic node: Variable name is missing');
     };
 
     if (!data.credentialId) {
@@ -54,7 +55,7 @@ export const anthropicExecutor: NodeExecutor<anthropicData> = async ({
                 }),
             );
     
-            throw new NonRetriableError('Gemini node: Credential is required');
+            throw new NonRetriableError('Anthropic node: Credential is required');
         };
     
 
@@ -66,7 +67,7 @@ export const anthropicExecutor: NodeExecutor<anthropicData> = async ({
             }),
         );
 
-        throw new NonRetriableError('Gemini node: User prompt is missing');
+        throw new NonRetriableError('Anthropic node: User prompt is missing');
     };
 
     const systemPrompt = data.systemPrompt
@@ -80,11 +81,19 @@ export const anthropicExecutor: NodeExecutor<anthropicData> = async ({
         return prisma.credential.findUnique({
             where: {
                 id: data.credentialId,
+                userId,
             },
         });
     });
 
     if (!credential) {
+        await publish(
+            anthropicChannel().status({
+                nodeId,
+                status: 'error',
+            }),
+        );
+        
         throw new NonRetriableError('Credential not found');
     };
 
