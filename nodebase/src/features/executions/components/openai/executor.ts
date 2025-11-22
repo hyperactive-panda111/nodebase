@@ -23,6 +23,7 @@ type OpenAiData = {
 export const openaiExecutor: NodeExecutor<OpenAiData> = async ({
     data,
     nodeId,
+    userId,
     context,
     step,
     publish,
@@ -43,7 +44,7 @@ export const openaiExecutor: NodeExecutor<OpenAiData> = async ({
             }),
         );
 
-        throw new NonRetriableError('Gemini node: Variable name is missing');
+        throw new NonRetriableError('OpenAI node: Variable name is missing');
     };
 
     if (!data.credentialId) {
@@ -54,7 +55,7 @@ export const openaiExecutor: NodeExecutor<OpenAiData> = async ({
                 }),
             );
     
-            throw new NonRetriableError('Gemini node: Credential is required');
+            throw new NonRetriableError('OpenAI node: Credential is required');
         };
     
 
@@ -66,7 +67,7 @@ export const openaiExecutor: NodeExecutor<OpenAiData> = async ({
             }),
         );
 
-        throw new NonRetriableError('Gemini node: User prompt is missing');
+        throw new NonRetriableError('OpenAI node: User prompt is missing');
     };
 
     const systemPrompt = data.systemPrompt
@@ -79,11 +80,18 @@ export const openaiExecutor: NodeExecutor<OpenAiData> = async ({
         return prisma.credential.findUnique({
             where: {
                 id: data.credentialId,
+                userId,
             },
         });
     });
 
     if (!credential) {
+        await publish(
+            openaiChannel().status({
+                nodeId,
+                status: 'error',
+            }),
+        );
         throw new NonRetriableError('Credential not found');
     };
 
