@@ -108,8 +108,7 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({
                 [data.variableName]: responsePayload,
             };
         });
-
-        //TODO: Publish 'success' state for http request
+        
         await publish(
             httpRequestChannel().status({
                 nodeId,

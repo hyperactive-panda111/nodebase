@@ -5,6 +5,7 @@ import { createAnthropic } from '@ai-sdk/anthropic';
 import { generateText } from 'ai';
 import { anthropicChannel } from '@/inngest/channels/anthropic';
 import prisma from '@/lib/db';
+import { decrypt } from '@/lib/encryption';
 
 Handlebars.registerHelper('json', (context) => {
     const jsonString = JSON.stringify(context, null, 2);
@@ -75,7 +76,6 @@ export const anthropicExecutor: NodeExecutor<anthropicData> = async ({
         : 'You are a helpful assistant';
     const userPrompt = Handlebars.compile(data.userPrompt)(context);
 
-    // TODO: Fetch credentials that user selected
     const credential = await step.run('get-credential', async () => {
         
         return prisma.credential.findUnique({
@@ -98,7 +98,7 @@ export const anthropicExecutor: NodeExecutor<anthropicData> = async ({
     };
 
     const anthropic = createAnthropic({
-        apiKey: credential.value,
+        apiKey: decrypt(credential.value),
         
     });
 
