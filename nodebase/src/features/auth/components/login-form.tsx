@@ -25,9 +25,8 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
 import { authClient } from '@/lib/auth-client';
-// import { authClient } from '@/lib/auth-client';
+
 
 const loginSchema = z.object({
     email: z.email("Please enter a valid email address"),
@@ -47,6 +46,31 @@ export function LoginForm() {
         },
     });
 
+    const signInGithub = async () => {
+         await authClient.signIn.social({
+            provider: "github"
+        }, {
+            onSuccess: () => {
+                router.push('/');
+            },
+            onError: () => {
+                toast.error('Something went wrong');
+            },
+        })
+    };
+
+    const signInGoogle = async () => {
+        await authClient.signIn.social({
+           provider: "google",
+       }, {
+           onSuccess: () => {
+               router.push('/');
+           },
+           onError: () => {
+               toast.error('Something went wrong');
+           },
+       })
+   };
     const onSubmit = async (values: LoginFormValues) => {
         await authClient.signIn.email({
             email: values.email,
@@ -84,6 +108,7 @@ export function LoginForm() {
                                         className='w-full'
                                         type='button'
                                         disabled={isPending}
+                                        onClick={signInGithub}
                                     >
                                         <Image
                                          src='logos/github.svg'
@@ -98,6 +123,7 @@ export function LoginForm() {
                                         className='w-full'
                                         type='button'
                                         disabled={isPending}
+                                        onClick={signInGoogle}
                                     >
                                         <Image
                                          src='logos/google.svg'
